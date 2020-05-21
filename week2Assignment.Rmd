@@ -1,0 +1,49 @@
+---
+title: "cities of the world"
+author: "Praveen Jalaja"
+date: "5/21/2020"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(leaflet)
+library(dplyr)
+```
+
+## cities of the world
+```{r chuck1, echo=TRUE}
+
+data <- read.csv("worldcities.csv")
+
+colnames(data)
+
+```
+
+### Objective
+  - Our objective is to create map with markers having information like name and population.
+  
+
+## Preprocessing 
+
+- we need columns like population , city_ascii, lat and lng from the raw data.
+
+```{r chuck2}
+new.data <- data%>%
+  select(city_ascii,lat,lng,population)%>%
+  rename(name = city_ascii)
+
+head(new.data)
+```
+
+
+
+## Cities Map
+
+```{r cars, echo = TRUE}
+new.data%>%
+  leaflet()%>%
+  addTiles()%>%
+  addMarkers(popup = new.data$population)
+```
+
